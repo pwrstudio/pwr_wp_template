@@ -1,0 +1,21 @@
+// PWR STUDIO
+@import 'compass/reset';
+@mixin vertical-align {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+$font-size: 12px;
+$line-height: 14px;
+$background-color: #fff;
+$main-color: #000;
+body {
+  font-size: $font-size;
+  line-height: $line-height;
+  background: $background-color;
+  color: $main-color;
+}
+
+//MOBILE PHONE
+@media only screen and (max-width: 480px) {}
