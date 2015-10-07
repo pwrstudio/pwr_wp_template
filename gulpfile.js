@@ -5,10 +5,8 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var autoprefixer = require('gulp-autoprefixer');
 var rename = require('gulp-rename');
-//var sass = require('gulp-ruby-sass');
 var compass = require('gulp-compass');
 var plumber = require('gulp-plumber');
-var imagemin = require('gulp-imagemin');
 var cache = require('gulp-cache');
 var jshint = require('gulp-jshint');
 var scsslint = require('gulp-scss-lint');
@@ -32,7 +30,7 @@ gulp.task('scripts', function () {
 });
 
 gulp.task('sass', function () {
-  return gulp.src('src/style/main.scss')
+  return gulp.src('src/style/style.scss')
     .pipe(plumber())
     .pipe(scsslint())
     .pipe(compass({
@@ -41,17 +39,7 @@ gulp.task('sass', function () {
     }))
     .pipe(autoprefixer())
     .pipe(minifyCSS())
-    .pipe(gulp.dest('build/style'));
-});
-
-gulp.task('images', function () {
-  return gulp.src('src/img/**/*')
-    .pipe(cache(imagemin({
-      optimizationLevel: 5,
-      progressive: true,
-      interlaced: true
-    })))
-    .pipe(gulp.dest('build/img'));
+    .pipe(gulp.dest('./'));
 });
 
 gulp.task('templates', function () {
