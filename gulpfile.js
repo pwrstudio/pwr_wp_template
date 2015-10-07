@@ -26,7 +26,7 @@ gulp.task('scripts', function () {
       suffix: '.min'
     }))
     .pipe(uglify())
-    .pipe(gulp.dest('build/js/'));
+    .pipe(gulp.dest('./'));
 });
 
 gulp.task('sass', function () {
@@ -52,7 +52,7 @@ gulp.task('templates', function () {
     }))
     .pipe(concat('templates.js'))
     .pipe(uglify())
-    .pipe(gulp.dest('build/js/'));
+    .pipe(gulp.dest('./'));
 });
 
 // Watch for changes in files
