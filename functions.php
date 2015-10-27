@@ -5,7 +5,7 @@
  */
 function pwrstudio_template_scripts() {
     wp_enqueue_style( 'pwrstudio_bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css');
-    wp_enqueue_style( 'pwrstudio_template-style', get_template_directory_uri() . 'style.css');
+    wp_enqueue_style( 'pwrstudio_template-style', get_template_directory_uri() . '/style.css');
         
     if (!is_admin()) {
         wp_deregister_script('jquery');
@@ -71,11 +71,16 @@ function disable_wp_emojicons() {
 }
 add_action( 'init', 'disable_wp_emojicons' );
 
+// Remove admin bar
+add_filter('show_admin_bar', '__return_false');
+
+// Remove generator tag
+remove_action('wp_head', 'wp_generator');
+
 add_filter( 'query_vars', function( $vars ){
     $vars[] = 'post_parent';
     return $vars;
 });
-
 
 // CUSTOM IMAGE SIZES
 add_action( 'after_setup_theme', 'image_size_setup' );

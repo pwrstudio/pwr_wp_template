@@ -61,11 +61,9 @@ gulp.task('watch', function () {
   gulp.watch('src/js/*.js', ['scripts']);
   // Watch .scss files
   gulp.watch('src/style/main.scss', ['sass']);
-  // Watch image files
-  gulp.watch('src/img/**/*', ['images']);
   // Watch templates
   gulp.watch('src/handlebars/*.handlebars', ['templates']);
 });
 
 // Default Task
-gulp.task('default', ['scripts', 'sass', 'images', 'watch', 'templates']);
+gulp.task('default', ['scripts', 'sass', 'watch', 'templates']);
