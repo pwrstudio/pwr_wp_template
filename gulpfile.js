@@ -1,19 +1,20 @@
 // Include gulp
-var gulp = require('gulp');
-// Include plugins
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var autoprefixer = require('gulp-autoprefixer');
-var rename = require('gulp-rename');
-var compass = require('gulp-compass');
-var plumber = require('gulp-plumber');
-var cache = require('gulp-cache');
-var jshint = require('gulp-jshint');
-var scsslint = require('gulp-scss-lint');
-var minifyCSS = require('gulp-minify-css');
-var handlebars = require('gulp-handlebars');
-var wrap = require('gulp-wrap');
-var declare = require('gulp-declare');
+var gulp = require('gulp'),
+  concat = require('gulp-concat'),
+  uglify = require('gulp-uglify'),
+  autoprefixer = require('gulp-autoprefixer'),
+  rename = require('gulp-rename'),
+  compass = require('gulp-compass'),
+  plumber = require('gulp-plumber'),
+  cache = require('gulp-cache'),
+  jshint = require('gulp-jshint'),
+  minifyCSS = require('gulp-minify-css'),
+  handlebars = require('gulp-handlebars'),
+  sass = require('gulp-sass'),
+  wrap = require('gulp-wrap'),
+  declare = require('gulp-declare'),
+  notify = require("gulp-notify"),
+  browserSync = require('browser-sync').create();
 
 
 // Concatenate & Minify JS
@@ -26,24 +27,29 @@ gulp.task('scripts', function () {
       suffix: '.min'
     }))
     .pipe(uglify())
-    .pipe(gulp.dest('./'));
+    .pipe(gulp.dest('./'))
+    .pipe(browserSync.stream());
 });
 
+// Handle styles
 gulp.task('sass', function () {
-  return gulp.src('src/style/style.scss')
-    .pipe(plumber())
-    .pipe(scsslint())
-    .pipe(compass({
-      css: 'build/style',
-      sass: 'src/style/'
+  return gulp.src('src/style/*.scss')
+    .pipe(plumber({
+      errorHandler: sassErrorAlert
     }))
+    .pipe(sass())
     .pipe(autoprefixer())
     .pipe(minifyCSS())
-    .pipe(gulp.dest('./'));
+    .pipe(gulp.dest('./'))
+    .pipe(browserSync.stream());
 });
 
+// Compile templates
 gulp.task('templates', function () {
   gulp.src('src/handlebars/*.handlebars')
+    .pipe(plumber({
+      errorHandler: handlebarsErrorAlert
+    }))
     .pipe(handlebars())
     .pipe(wrap('Handlebars.template(<%= contents %>)'))
     .pipe(declare({
@@ -52,7 +58,16 @@ gulp.task('templates', function () {
     }))
     .pipe(concat('templates.js'))
     .pipe(uglify())
-    .pipe(gulp.dest('./'));
+    .pipe(gulp.dest('./'))
+    .pipe(browserSync.stream());
+});
+
+// Browser Sync
+gulp.task('browser-sync', function () {
+  browserSync.init({
+    proxy: "localhost:8888",
+    open: false
+  });
 });
 
 // Watch for changes in files
@@ -60,10 +75,30 @@ gulp.task('watch', function () {
   // Watch .js files
   gulp.watch('src/js/*.js', ['scripts']);
   // Watch .scss files
-  gulp.watch('src/style/main.scss', ['sass']);
+  gulp.watch('src/style/*.scss', ['sass']);
   // Watch templates
   gulp.watch('src/handlebars/*.handlebars', ['templates']);
 });
 
 // Default Task
-gulp.task('default', ['scripts', 'sass', 'watch', 'templates']);
+gulp.task('default', ['scripts', 'sass', 'watch', 'templates', 'browser-sync']);
+
+function sassErrorAlert(error) {
+  notify.onError({
+    title: "SCSS Error",
+    message: error.message,
+    sound: "Submarine"
+  })(error); //Error Notification
+  console.log(error.toString()); //Prints Error to Console
+  this.emit("end"); //End function
+};
+
+function handlebarsErrorAlert(error) {
+  notify.onError({
+    title: "Handlebars Error",
+    message: error.message,
+    sound: "Ping"
+  })(error); //Error Notification
+  console.log(error.toString()); //Prints Error to Console
+  this.emit("end"); //End function
+};

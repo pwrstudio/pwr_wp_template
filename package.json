@@ -1,23 +1,31 @@
 {
-    "name": "pwr_wp_template",
-    "version": "1.0.0",
-    "dependencies": {},
-    "devDependencies": {
-        "gulp": "^3.8.11",
-        "gulp-autoprefixer": "0.0.6",
-        "gulp-cache": "~0.1.1",
-        "gulp-compass": "^2.0.3",
-        "gulp-concat": "~2.1.7",
-        "gulp-debug": "^2.0.1",
-        "gulp-jshint": "^1.9.2",
-        "gulp-minify-css": "^1.0.0",
-        "gulp-notify": "~0.4.0",
-        "gulp-plumber": "^1.0.0",
-        "gulp-rename": "~0.2.2",
-        "gulp-scss-lint": "^0.1.10",
-        "gulp-uglify": "~0.2.0",
-        "gulp-handlebars": "*",
-        "gulp-wrap": "*",
-        "gulp-declare": "*"
-    }
+  "name": "pwr_wp_template",
+  "version": "1.0.0",
+  "author": "PWR",
+  "description": "Template for wordpress development",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pwrstudio/pwr_wp_template"
+  },
+  "dependencies": {
+    "browser-sync": "^2.10.0",
+    "gulp-notify": "^2.2.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-autoprefixer": "0.0.6",
+    "gulp-cache": "~0.1.1",
+    "gulp-concat": "~2.1.7",
+    "gulp-debug": "^2.0.1",
+    "gulp-declare": "*",
+    "gulp-handlebars": "*",
+    "gulp-jshint": "^1.9.2",
+    "gulp-minify-css": "^1.0.0",
+    "gulp-plumber": "^1.0.0",
+    "gulp-rename": "~0.2.2",
+    "gulp-sass": "^2.1.0",
+    "gulp-scss-lint": "^0.1.10",
+    "gulp-uglify": "~0.2.0",
+    "gulp-wrap": "*"
+  }
 }
