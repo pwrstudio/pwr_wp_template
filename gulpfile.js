@@ -1,5 +1,5 @@
 // Include gulp
-var gulp = require('gulp'),
+const gulp = require('gulp'),
   concat = require('gulp-concat'),
   uglify = require('gulp-uglify'),
   autoprefixer = require('gulp-autoprefixer'),
@@ -13,6 +13,8 @@ var gulp = require('gulp'),
   wrap = require('gulp-wrap'),
   declare = require('gulp-declare'),
   notify = require("gulp-notify"),
+  imagemin = require('gulp-imagemin'),
+  pngquant = require('imagemin-pngquant'),
   browserSync = require('browser-sync').create();
 
 
@@ -69,18 +71,33 @@ gulp.task('browser-sync', function () {
   });
 });
 
+// Images
+gulp.task('images', () => {
+  return gulp.src('src/img/*')
+    .pipe(imagemin({
+      progressive: true,
+      svgoPlugins: [{
+        removeViewBox: false
+      }],
+      use: [pngquant()]
+    }))
+    .pipe(gulp.dest('img'));
+});
+
 // Watch for changes in files
 gulp.task('watch', function () {
   // Watch .js files
   gulp.watch('src/js/*.js', ['scripts']);
   // Watch .scss files
   gulp.watch('src/style/*.scss', ['sass']);
+  // Watch images
+  gulp.watch('src/img/*', ['images']);
   // Watch templates
   gulp.watch('src/handlebars/*.handlebars', ['templates']);
 });
 
 // Default Task
-gulp.task('default', ['scripts', 'sass', 'watch', 'templates', 'browser-sync']);
+gulp.task('default', ['scripts', 'sass', 'watch', 'templates', 'browser-sync', 'images']);
 
 function sassErrorAlert(error) {
   notify.onError({

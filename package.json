@@ -19,6 +19,7 @@
     "gulp-debug": "^2.0.1",
     "gulp-declare": "*",
     "gulp-handlebars": "*",
+    "gulp-imagemin": "^2.4.0",
     "gulp-jshint": "^1.9.2",
     "gulp-minify-css": "^1.0.0",
     "gulp-plumber": "^1.0.0",
@@ -26,6 +27,7 @@
     "gulp-sass": "^2.1.0",
     "gulp-scss-lint": "^0.1.10",
     "gulp-uglify": "~0.2.0",
-    "gulp-wrap": "*"
+    "gulp-wrap": "*",
+    "imagemin-pngquant": "^4.2.0"
   }
 }
