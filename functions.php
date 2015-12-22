@@ -46,6 +46,15 @@ if(function_exists('disabler_kill_rss')) {
 remove_action( 'wp_head', 'feed_links_extra', 3 ); //Extra feeds such as category feeds
 remove_action( 'wp_head', 'feed_links', 2 ); // General feeds: Post and Comment Feed
 
+// Disable json api
+add_filter('rest_jsonp_enabled', '_return_false');
+remove_action( 'wp_head', 'rest_output_link_wp_head', 10 );
+remove_action( 'wp_head', 'wp_oembed_add_discovery_links', 10 );
+
+// Remove the Link header for the WP REST API
+// [link] => <http://www.example.com/wp-json/>; rel="https://api.w.org/"
+remove_action( 'template_redirect', 'rest_output_link_header', 11, 0 );
+
 function pu_remove_script_version( $src ){
     return remove_query_arg( 'ver', $src );
 }
