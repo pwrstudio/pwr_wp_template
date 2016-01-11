@@ -6,23 +6,21 @@ const gulp = require('gulp'),
   rename = require('gulp-rename'),
   plumber = require('gulp-plumber'),
   cache = require('gulp-cache'),
-  jshint = require('gulp-jshint'),
-  minifyCSS = require('gulp-minify-css'),
+  cssnano = require('gulp-cssnano'),
   handlebars = require('gulp-handlebars'),
   sass = require('gulp-sass'),
   wrap = require('gulp-wrap'),
   declare = require('gulp-declare'),
-  notify = require("gulp-notify"),
+  notify = require('gulp-notify'),
   imagemin = require('gulp-imagemin'),
   pngquant = require('imagemin-pngquant'),
+  changed = require('gulp-changed'),
+  parker = require('gulp-parker'),
   browserSync = require('browser-sync').create();
-
 
 // Concatenate & Minify JS
 gulp.task('scripts', function () {
   return gulp.src('src/js/*.js')
-    .pipe(jshint())
-    .pipe(jshint.reporter('default'))
     .pipe(concat('main.js'))
     .pipe(rename({
       suffix: '.min'
@@ -34,13 +32,14 @@ gulp.task('scripts', function () {
 
 // Handle styles
 gulp.task('sass', function () {
-  return gulp.src('src/style/*.scss')
+  return gulp.src('src/style/style.scss')
+    .pipe(changed('./'))
     .pipe(plumber({
       errorHandler: sassErrorAlert
     }))
     .pipe(sass())
     .pipe(autoprefixer())
-    .pipe(minifyCSS())
+    .pipe(cssnano())
     .pipe(gulp.dest('./'))
     .pipe(browserSync.stream());
 });
@@ -55,7 +54,7 @@ gulp.task('templates', function () {
     .pipe(wrap('Handlebars.template(<%= contents %>)'))
     .pipe(declare({
       namespace: 'MyApp.templates',
-      noRedeclare: true, // Avoid duplicate declarations 
+      noRedeclare: true
     }))
     .pipe(concat('templates.js'))
     .pipe(uglify())
@@ -66,7 +65,7 @@ gulp.task('templates', function () {
 // Browser Sync
 gulp.task('browser-sync', function () {
   browserSync.init({
-    proxy: "localhost:8888",
+    proxy: 'localhost:8888',
     open: false
   });
 });
@@ -74,11 +73,12 @@ gulp.task('browser-sync', function () {
 // Images
 gulp.task('images', () => {
   return gulp.src('src/img/*')
+    .pipe(changed('img'))
     .pipe(imagemin({
       progressive: true,
       svgoPlugins: [{
         removeViewBox: false
-      }],
+        }],
       use: [pngquant()]
     }))
     .pipe(gulp.dest('img'));
@@ -86,14 +86,24 @@ gulp.task('images', () => {
 
 // Watch for changes in files
 gulp.task('watch', function () {
+
   // Watch .js files
   gulp.watch('src/js/*.js', ['scripts']);
+
   // Watch .scss files
   gulp.watch('src/style/*.scss', ['sass']);
+
   // Watch images
   gulp.watch('src/img/*', ['images']);
+
   // Watch templates
   gulp.watch('src/handlebars/*.handlebars', ['templates']);
+});
+
+// Analyze CSS
+gulp.task('parker', function () {
+  return gulp.src('./style.css')
+    .pipe(parker());
 });
 
 // Default Task
@@ -101,20 +111,20 @@ gulp.task('default', ['scripts', 'sass', 'watch', 'templates', 'browser-sync', '
 
 function sassErrorAlert(error) {
   notify.onError({
-    title: "SCSS Error",
+    title: 'SCSS Error',
     message: error.message,
-    sound: "Submarine"
+    sound: 'Submarine'
   })(error); //Error Notification
   console.log(error.toString()); //Prints Error to Console
-  this.emit("end"); //End function
+  this.emit('end'); //End function
 };
 
 function handlebarsErrorAlert(error) {
   notify.onError({
-    title: "Handlebars Error",
+    title: 'Handlebars Error',
     message: error.message,
-    sound: "Ping"
+    sound: 'Ping'
   })(error); //Error Notification
   console.log(error.toString()); //Prints Error to Console
-  this.emit("end"); //End function
+  this.emit('end'); //End function
 };
