@@ -16,6 +16,7 @@
     "gulp-changed": "^1.3.0",
     "gulp-concat": "~2.1.7",
     "gulp-cssnano": "^2.1.0",
+    "gulp-fontgen": "^0.1.6",
     "gulp-debug": "^2.0.1",
     "gulp-declare": "*",
     "gulp-handlebars": "*",
