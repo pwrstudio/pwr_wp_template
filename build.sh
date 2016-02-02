@@ -7,3 +7,4 @@ cp -v ./main.min.js ../$NAME-$TIME/
 cp -v ./templates.js ../$NAME-$TIME/
 cp -v ./style.css ../$NAME-$TIME/
 rsync -av ./img/ ../$NAME-$TIME/img
+rsync -av ./fonts/ ../$NAME-$TIME/fonts

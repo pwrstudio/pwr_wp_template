@@ -16,6 +16,7 @@ const gulp = require('gulp'),
   pngquant = require('imagemin-pngquant'),
   changed = require('gulp-changed'),
   parker = require('gulp-parker'),
+  fontgen = require('gulp-fontgen'),
   browserSync = require('browser-sync').create();
 
 // Concatenate & Minify JS
@@ -84,11 +85,21 @@ gulp.task('images', () => {
     .pipe(gulp.dest('img'));
 });
 
+gulp.task('font', function () {
+  return gulp.src("./src/fonts/*.{ttf,otf}")
+    .pipe(fontgen({
+      dest: "./fonts/"
+    }));
+});
+
 // Watch for changes in files
 gulp.task('watch', function () {
 
   // Watch .js files
   gulp.watch('src/js/*.js', ['scripts']);
+
+  // Watch .php files
+  gulp.watch('*.php', browserSync.reload);
 
   // Watch .scss files
   gulp.watch('src/style/*.scss', ['sass']);
@@ -98,6 +109,9 @@ gulp.task('watch', function () {
 
   // Watch templates
   gulp.watch('src/handlebars/*.handlebars', ['templates']);
+
+  // Watch fonts
+  gulp.watch('src/fonts/*.{ttf,otf}"', ['font']);
 });
 
 // Analyze CSS
@@ -107,7 +121,7 @@ gulp.task('parker', function () {
 });
 
 // Default Task
-gulp.task('default', ['scripts', 'sass', 'watch', 'templates', 'browser-sync', 'images']);
+gulp.task('default', ['scripts', 'sass', 'watch', 'templates', 'browser-sync', 'images', 'font']);
 
 function sassErrorAlert(error) {
   notify.onError({
