@@ -98,3 +98,28 @@ function image_size_setup() {
     add_image_size( 'pwr-medium', 800 );
     add_image_size( 'pwr-large', 1600 );
 }
+
+/*-------------------------------------------------------------------------------
+	Custom Columns
+-------------------------------------------------------------------------------*/
+function my_page_columns($columns)
+{
+	$columns = array(
+		'cb'	 	=> '<input type="checkbox" />',
+		'thumbnail'	=>	'Image',
+		'title' 	=> 'Title',
+		'categories'	=>	'Categories',
+	);
+	return $columns;
+}
+function my_custom_columns($column)
+{
+	global $post;
+	if($column == 'thumbnail')
+	{
+        $image = get_field('image', $post->ID);
+		echo '<img src="' . $image[sizes][thumbnail] . '">';
+	}
+}
+add_action("manage_posts_custom_column", "my_custom_columns");
+add_filter("manage_edit-post_columns", "my_page_columns");
