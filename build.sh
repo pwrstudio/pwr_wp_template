@@ -1,10 +1,11 @@
 #!/bin/bash
 TIME=`date +%Y-%m-%d-%H-%M`
 NAME=${PWD##*/}
-mkdir -v ../$NAME-$TIME
-cp -v ./*.php ../$NAME-$TIME/
-cp -v ./main.min.js ../$NAME-$TIME/
-cp -v ./templates.js ../$NAME-$TIME/
-cp -v ./style.css ../$NAME-$TIME/
-rsync -av ./img/ ../$NAME-$TIME/img
-rsync -av ./fonts/ ../$NAME-$TIME/fonts
+NICK=`gshuf -n 1 /usr/share/dict/words`
+mkdir -v ../$NAME-$TIME-$NICK
+cp -v ./*.php ../$NAME-$TIME-$NICK/
+cp -v ./main.min.js ../$NAME-$TIME-$NICK/
+cp -v ./templates.js ../$NAME-$TIME-$NICK/
+cp -v ./style.css ../$NAME-$TIME-$NICK/
+rsync -av ./img/ ../$NAME-$TIME-$NICK/img
+rsync -av ./fonts/ ../$NAME-$TIME-$NICK/fonts

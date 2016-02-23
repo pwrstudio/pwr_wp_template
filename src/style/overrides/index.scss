@@ -1,0 +1,10 @@
+body {
+  background: $background-color;
+  color: $main-color;
+  font-size: $font-size;
+  line-height: $line-height;
+  @include respond-to('small') {
+    background:  $main-color;
+    color: $background-color;
+  }
+}
