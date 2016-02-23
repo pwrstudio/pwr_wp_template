@@ -1,0 +1,28 @@
+* {
+  &::selection {
+    background: $main-color;
+    color: $background-color;
+  }
+}
+
+body {
+  background: $background-color;
+  color: $main-color;
+  font-size: $font-size;
+  line-height: $line-height;
+  @include screen-size('small') {}
+}
+
+a {
+  color: $main-color;
+  text-decoration: none;
+  &:visited {
+    color: $main-color;
+  }
+  &:hover {
+    color: $main-color;
+  }
+  &:active {
+    color: $main-color;
+  }
+}
