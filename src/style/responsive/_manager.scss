@@ -3,7 +3,7 @@
 /// @param {String} $breakpoint - Breakpoint
 /// @requires $breakpoints
 
-@mixin respond-to($breakpoint) {
+@mixin screen-size($breakpoint) {
   $raw-query: map-get($breakpoints, $breakpoint);
 
   @if $raw-query {
