@@ -73,7 +73,7 @@ gulp.task('browser-sync', function () {
 
 // Images
 gulp.task('images', () => {
-  return gulp.src('src/img/*')
+  return gulp.src('src/img/**/*')
     .pipe(changed('img'))
     .pipe(imagemin({
       progressive: true,
@@ -85,6 +85,7 @@ gulp.task('images', () => {
     .pipe(gulp.dest('img'));
 });
 
+// Generate webfonts
 gulp.task('font', function () {
   return gulp.src("./src/fonts/*.{ttf,otf}")
     .pipe(fontgen({

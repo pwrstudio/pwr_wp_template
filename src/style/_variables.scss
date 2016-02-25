@@ -26,8 +26,8 @@ $main-color: #000;
 //
 
 $breakpoints: (
-  'small': (min-width: 700px),
-  'medium': (min-width: 1000px),
-  'large': (min-width: 1600px),
-  'short': (min-height: 600px),
+  'small': (max-width: 700px),
+  'medium': (max-width: 1000px),
+  'large': (max-width: 1600px),
+  'short': (max-height: 600px),
 );
