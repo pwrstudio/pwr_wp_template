@@ -17,18 +17,26 @@ const gulp = require('gulp'),
   changed = require('gulp-changed'),
   parker = require('gulp-parker'),
   fontgen = require('gulp-fontgen'),
+  browserify = require('browserify'),
+  source = require('vinyl-source-stream'),
+  buffer = require('vinyl-buffer'),
+  hbsfy = require("hbsfy").configure({
+    extensions: ["html"]
+  }),
   browserSync = require('browser-sync').create();
 
-// Concatenate & Minify JS
+// Build javascript
 gulp.task('scripts', function () {
-  return gulp.src('src/js/*.js')
-    .pipe(concat('main.js'))
-    .pipe(rename({
-      suffix: '.min'
-    }))
+
+  return browserify('./src/js/app.js', {debug: true})
+    .transform(hbsfy)
+    .bundle()
+    .pipe(source('app.min.js'))
+    .pipe(buffer())
     .pipe(uglify())
     .pipe(gulp.dest('./'))
     .pipe(browserSync.stream());
+
 });
 
 // Handle styles
@@ -41,24 +49,6 @@ gulp.task('sass', function () {
     .pipe(sass())
     .pipe(autoprefixer())
     .pipe(cssnano())
-    .pipe(gulp.dest('./'))
-    .pipe(browserSync.stream());
-});
-
-// Compile templates
-gulp.task('templates', function () {
-  gulp.src('src/handlebars/*.handlebars')
-    .pipe(plumber({
-      errorHandler: handlebarsErrorAlert
-    }))
-    .pipe(handlebars())
-    .pipe(wrap('Handlebars.template(<%= contents %>)'))
-    .pipe(declare({
-      namespace: 'MyApp.templates',
-      noRedeclare: true
-    }))
-    .pipe(concat('templates.js'))
-    .pipe(uglify())
     .pipe(gulp.dest('./'))
     .pipe(browserSync.stream());
 });
@@ -108,9 +98,6 @@ gulp.task('watch', function () {
   // Watch images
   gulp.watch('src/img/*', ['images']);
 
-  // Watch templates
-  gulp.watch('src/handlebars/*.handlebars', ['templates']);
-
   // Watch fonts
   gulp.watch('src/fonts/*.{ttf,otf}"', ['font']);
 });
@@ -122,7 +109,7 @@ gulp.task('parker', function () {
 });
 
 // Default Task
-gulp.task('default', ['scripts', 'sass', 'watch', 'templates', 'browser-sync', 'images', 'font']);
+gulp.task('default', ['scripts', 'sass', 'watch', 'browser-sync', 'images', 'font']);
 
 function sassErrorAlert(error) {
   notify.onError({
@@ -143,3 +130,12 @@ function handlebarsErrorAlert(error) {
   console.log(error.toString()); //Prints Error to Console
   this.emit('end'); //End function
 };
+
+function handleErrors() {
+  var args = Array.prototype.slice.call(arguments);
+  notify.onError({
+    title: "Compile Error",
+    message: "<%= error %>"
+  }).apply(this, args);
+  this.emit('end'); // Keep gulp from hanging on this task
+}

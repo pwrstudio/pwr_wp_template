@@ -1,7 +1,0 @@
-{
-    "name": "pwr_wp_template",
-    "version": "1.0.0",
-    "dependencies": {
-        "fontawesome": "latest"
-    }
-}

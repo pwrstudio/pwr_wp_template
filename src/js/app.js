@@ -4,6 +4,9 @@
 (function () {
 
   "use strict";
+  
+  var $      = require("jquery"),
+  global   = require("./global");
 
   $(function () {
     console.log("ready!");
