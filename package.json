@@ -32,10 +32,15 @@
   },
   "dependencies": {
     "browserify": "^13.0.0",
-    "vinyl-transform": "^1.0.0",
+    "debounce": "^1.0.0",
+    "gulp-handlebars": "^4.0.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "handlebars": "^4.0.5",
     "hbsfy": "^2.5.1",
     "jquery": "^2.2.1",
+    "ttf2woff2": "^2.0.3",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^1.1.0",
+    "vinyl-transform": "^1.0.0"
   }
 }

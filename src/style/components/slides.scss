@@ -1,0 +1,44 @@
+img {
+  max-width: 100%;
+  display: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.shown {
+  display: block;
+}
+
+.image-container {
+  position: relative;
+}
+
+.image-list {
+  display: none;
+}
+
+.previous {
+  left: 0%;
+  cursor: url('img/control-prev.png'), w-resize;
+}
+
+.next {
+  left: 50%;
+  cursor: url('img/control-next.png'), e-resize;
+}
+
+.caption {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.nav-overlay {
+  height: 100%;
+  top: 0;
+  position: absolute;
+  width: 50%;
+  z-index: 900;
+  background: none;
+}
