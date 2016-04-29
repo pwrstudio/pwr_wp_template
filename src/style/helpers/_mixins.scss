@@ -10,7 +10,6 @@
   }
 }
 
-
 /// 
 /// Helper to handle overflowing text
 /// Values of text-overflow are: clip, ellipsis, or a string
@@ -22,7 +21,6 @@
   white-space: nowrap;
 }
 
-
 /// 
 /// Helper to set height and width
 ///
@@ -31,7 +29,6 @@
   height: $height;
   width: $width;
 }
-
 
 /// 
 /// Helper to center element vertically and horizontally in parent
@@ -65,6 +62,16 @@
   transform: translateX(-50%);
 }
 
+/// 
+/// Hide scrollbar in chrome and IE
+///
+@mixin hide-scroll {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+}
+
 ///
 /// Credit: thoughtbot - http://robots.thoughtbot.com/sasss-content-directive
 ///
@@ -81,14 +88,14 @@
 }
 */
 
-@mixin element( $name ) {
-  @at-root #{&}__#{$name} {
-    @content;
-  }
-}
-
-@mixin modifier( $name ) {
-  @at-root #{&}--#{$name} {
-    @content;
-  }
-}
+//@mixin element( $name ) {
+//  @at-root #{&}__#{$name} {
+//    @content;
+//  }
+//}
+//
+//@mixin modifier( $name ) {
+//  @at-root #{&}--#{$name} {
+//    @content;
+//  }
+//}

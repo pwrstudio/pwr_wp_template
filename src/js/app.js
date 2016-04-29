@@ -5,10 +5,14 @@
 
   "use strict";
   
-  var $             = require("jquery"),
-      debounce      = require('debounce'),
-      global        = require("./global"),
-      slides        = require("./components/slides");
+  var global.$          = require("jquery"),
+      shared            = require("./shared");
+//    debounce          = require('debounce'),
+//    slides            = require("./components/slides"),
+//    swiper            = require("swiper")
+  
+//    require('browsernizr/test/websockets');
+//    require('browsernizr');
   
   $(function () {
     console.log("ready!");
