@@ -21,20 +21,19 @@
 
 
 //
-// Utility Mixins and functions
-//
-
-@import 'helpers/mixins';
-@import 'helpers/classes';
-
-
-//
 // Responsive
 //
 
 @import 'responsive/embed';
 @import 'responsive/manager';
 
+
+//
+// Utility Mixins and functions
+//
+
+@import 'helpers/mixins';
+@import 'helpers/classes';
 
 //
 // Basics
@@ -61,7 +60,7 @@
 
 //
 // Pages
-//
+// 
 
 //@import 'pages/index';
 
@@ -73,11 +72,12 @@
 @import 'overrides/overrides';
 
 //
-// Libraries
+// Vendor
 //
 
-//@import 'libraries/xxx';
-
+//@import 'vendor/swiper';
+//@import 'vendor/fullpage';
+//@import 'vendor/animate';
 
 //
 // Uncomment for debug mode

@@ -138,3 +138,7 @@ table {
   -webkit-tap-highlight-color: transparent;
   -webkit-text-size-adjust: 100%;
 }
+
+img {
+  user-select: none;
+}

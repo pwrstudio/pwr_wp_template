@@ -1,9 +1,7 @@
 <?php get_header(); ?>
 
-  //*******
-  //*******
-  //*******
-  // Basic loop
+
+  <?php // Basic loop ?>
   <?php $args = array('post_type' => 'post', 'category_name' => "artists", 'posts_per_page' => -1); ?>
   <?php $about = new WP_Query( $args ); ?>
   <?php while ( $about->have_posts() ) : $about->the_post(); ?>
@@ -12,18 +10,12 @@
   <?php wp_reset_query(); ?>
 
 
-  //*******
-  //*******
-  //*******
-  // Get page by name
+  <?php // Get page by name ?>
   <?php $page = get_page_by_title( 'name' );?>
   <?php $text = get_field('text', $page->ID);?>
 
 
-  //*******
-  //*******
-  //*******
-  // ACF image loop
+  <?php // ACF image loop ?>
   <?php if(have_rows('media')):?>
     <?php while ( have_rows('media') ) : the_row(); ?>
       <?php $image = get_sub_field('image'); ?>
@@ -33,10 +25,15 @@
   <?php endif; ?>
 
 
-  //*******
-  //*******
-  //*******
-  // Include gallery partial
+  <?php // Include gallery partial ?>
   <?php get_template_part('gallery'); ?>
+
+
+  <?php // Swiper HTML strucutre ?>
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">PWR template</div>
+    </div>
+  </div>
 
 <?php get_footer(); ?>
