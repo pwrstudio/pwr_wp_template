@@ -1,2 +1,2 @@
-PWR
-pwr.site
+PWR starter wordpress theme
+Using gulp, sass, browserify and optionally handlebars
