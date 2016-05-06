@@ -17,17 +17,8 @@
 
 @mixin truncate-text($overflow: ellipsis) {
   overflow: hidden;
-  text-overflow: $overflow; // 
+  text-overflow: $overflow;
   white-space: nowrap;
-}
-
-/// 
-/// Helper to set height and width
-///
-
-@mixin size($width, $height: $width) {
-  height: $height;
-  width: $width;
 }
 
 /// 

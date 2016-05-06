@@ -2,6 +2,7 @@
 <html <?php language_attributes(); ?>>
   
 <head>
+  
   <meta charset="<?php bloginfo( 'charset' ); ?>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="theme-color" content="#000">
@@ -24,6 +25,7 @@
   <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
   
   <title><?php wp_title(" | ", TRUE, "RIGHT"); ?></title>
+
 
   <?php wp_head(); ?>
     

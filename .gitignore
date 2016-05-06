@@ -1,7 +1,7 @@
 node_modules
 build
 .sass-cache
-main.min.js
+app.min.js
 style.css
 .DS_Store
 src/.DS_Store

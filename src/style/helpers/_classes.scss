@@ -9,6 +9,11 @@
   visibility: hidden;
 }
 
+.mobile-hidden {
+  @include screen-size('small') {
+    display: none;
+  }
+}
 
 // Invisible
 //
