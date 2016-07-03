@@ -4,20 +4,39 @@
  * Enqueue scripts and styles.
  */
 function pwrstudio_template_scripts() {
-
+  
+    // Enque font style file
+    //    wp_enqueue_style( 'univers_light', get_template_directory_uri() . '/fonts/UniversLTCYR-45Light.css');
     wp_enqueue_style( 'pwrstudio_template-style', get_template_directory_uri() . '/style.css');
         
     if (!is_admin()) {
+      
         wp_deregister_script('jquery');
-        
+      
         wp_register_script( 'pwr_scripts', get_template_directory_uri() . '/app.min.js', false, '1', true);
         wp_enqueue_script('pwr_scripts');
-                      
+                        
     }
 
 }
 add_action( 'wp_enqueue_scripts', 'pwrstudio_template_scripts' );
 
+// Function to output what template file is used to show a particular page
+
+//add_filter( 'template_include', 'var_template_include', 1000 );
+//function var_template_include( $t ){
+//    $GLOBALS['current_theme_template'] = basename($t);
+//    return $t;
+//}
+//
+//function get_current_template( $echo = false ) {
+//    if( !isset( $GLOBALS['current_theme_template'] ) )
+//        return false;
+//    if( $echo )
+//        echo $GLOBALS['current_theme_template'];
+//    else
+//        return $GLOBALS['current_theme_template'];
+//}
 
 // DISABLE STUFF
 
@@ -46,10 +65,10 @@ remove_action( 'wp_head', 'wp_oembed_add_discovery_links', 10 );
 // [link] => <http://www.example.com/wp-json/>; rel="https://api.w.org/"
 remove_action( 'template_redirect', 'rest_output_link_header', 11, 0 );
 
+// Remove script and style versions
 function pu_remove_script_version( $src ){
     return remove_query_arg( 'ver', $src );
 }
-
 add_filter( 'script_loader_src', 'pu_remove_script_version' );
 add_filter( 'style_loader_src', 'pu_remove_script_version' );
 
@@ -57,6 +76,7 @@ add_filter( 'style_loader_src', 'pu_remove_script_version' );
 remove_action('wp_head', 'rsd_link');
 remove_action('wp_head', 'wlwmanifest_link');
 
+// Disable emojis
 function disable_wp_emojicons() {
 
   // all actions related to emojis
@@ -89,6 +109,16 @@ function image_size_setup() {
     add_image_size( 'pwr-medium', 800 );
     add_image_size( 'pwr-large', 1400 );
 }
+
+// Allow svg in upload
+function cc_mime_types($mimes) {
+  $mimes['svg'] = 'image/svg+xml';
+  return $mimes;
+}
+add_filter('upload_mimes', 'cc_mime_types');
+
+// Add support for featured images
+add_theme_support( 'post-thumbnails' );
 
 /*-------------------------------------------------------------------------------
 	Custom Columns
