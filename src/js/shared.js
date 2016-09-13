@@ -1,6 +1,5 @@
-/*jslint browser: true, devel: true, node: true, nomen: true, plusplus: true*/
-/*global $, jQuery*/
+// shared.js
 
-var shared = {};
+var shared = {}
 
-module.exports = shared;
+module.exports = shared

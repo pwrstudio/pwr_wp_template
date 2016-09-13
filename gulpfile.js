@@ -18,6 +18,7 @@ const gulp = require('gulp'),
   parker = require('gulp-parker'),
   fontgen = require('gulp-fontgen'),
   browserify = require('browserify'),
+  ts = require('gulp-typescript'),
   source = require('vinyl-source-stream'),
   buffer = require('vinyl-buffer'),
   hbsfy = require("hbsfy").configure({
