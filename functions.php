@@ -120,6 +120,30 @@ add_filter('upload_mimes', 'cc_mime_types');
 // Add support for featured images
 add_theme_support( 'post-thumbnails' );
 
+// Add categories as classes on single pages
+add_filter('body_class','add_category_to_single');
+function add_category_to_single($classes, $class) {
+	if (is_single() ) {
+		global $post;
+		foreach((get_the_category($post->ID)) as $category) {
+			// add category slug to the $classes array
+			$classes[] = $category->category_nicename;
+		}
+	}
+	// return the $classes array
+	return $classes;
+}
+
+//Page Slug Body Class
+function add_slug_body_class( $classes ) {
+global $post;
+if ( isset( $post ) ) {
+$classes[] = $post->post_type . '-' . $post->post_name;
+}
+return $classes;
+}
+add_filter( 'body_class', 'add_slug_body_class' );
+
 /*-------------------------------------------------------------------------------
 	Custom Columns
 -------------------------------------------------------------------------------*/

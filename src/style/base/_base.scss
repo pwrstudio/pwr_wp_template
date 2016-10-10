@@ -10,6 +10,7 @@ body {
   color: $main-color;
   font-size: $font-size;
   line-height: $line-height;
+  font-familyl: $system-stack;
   @include screen-size('small') {}
 }
 
