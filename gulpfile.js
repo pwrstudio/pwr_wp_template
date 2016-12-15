@@ -1,39 +1,41 @@
 // Include gulp
-const gulp = require('gulp'),
-  concat = require('gulp-concat'),
-  uglify = require('gulp-uglify'),
-  autoprefixer = require('gulp-autoprefixer'),
-  rename = require('gulp-rename'),
-  plumber = require('gulp-plumber'),
-  cache = require('gulp-cache'),
-  cssnano = require('gulp-cssnano'),
-  handlebars = require('gulp-handlebars'),
-  sass = require('gulp-sass'),
-  wrap = require('gulp-wrap'),
-  declare = require('gulp-declare'),
-  notify = require('gulp-notify'),
-  imagemin = require('gulp-imagemin'),
-  pngquant = require('imagemin-pngquant'),
-  changed = require('gulp-changed'),
-  parker = require('gulp-parker'),
-  fontgen = require('gulp-fontgen'),
-  browserify = require('browserify'),
-  source = require('vinyl-source-stream'),
-  buffer = require('vinyl-buffer'),
-  hbsfy = require("hbsfy").configure({
-    extensions: ["html"]
-  }),
-  browserSync = require('browser-sync').create();
+const gulp = require('gulp')
+const concat = require('gulp-concat')
+const uglify = require('gulp-uglify')
+const autoprefixer = require('gulp-autoprefixer')
+const rename = require('gulp-rename')
+const plumber = require('gulp-plumber')
+const cache = require('gulp-cache')
+const cssnano = require('gulp-cssnano')
+const sass = require('gulp-sass')
+const wrap = require('gulp-wrap')
+const declare = require('gulp-declare')
+const notify = require('gulp-notify')
+const imagemin = require('gulp-imagemin')
+const pngquant = require('imagemin-pngquant')
+const changed = require('gulp-changed')
+const parker = require('gulp-parker')
+const fontgen = require('gulp-fontgen')
+const browserify = require('browserify')
+const source = require('vinyl-source-stream')
+const buffer = require('vinyl-buffer')
+const stripDebug = require('gulp-strip-debug')
+const gulpif = require('gulp-if')
+const argv = require('yargs').argv
+
+
+
+const browserSync = require('browser-sync').create()
 
 // Build javascript
 gulp.task('scripts', function () {
 
   return browserify('./src/js/app.js', {debug: true})
-    .transform(hbsfy)
     .bundle()
     .pipe(source('app.min.js'))
     .pipe(buffer())
-    .pipe(uglify())
+    .pipe(gulpif(argv.production, uglify()))
+    .pipe(gulpif(argv.production, stripDebug()))
     .pipe(gulp.dest('./'))
     .pipe(browserSync.stream());
 
@@ -47,8 +49,8 @@ gulp.task('sass', function () {
       errorHandler: sassErrorAlert
     }))
     .pipe(sass())
-    .pipe(autoprefixer())
-    .pipe(cssnano())
+    .pipe(gulpif(argv.production, autoprefixer()))
+    .pipe(gulpif(argv.production, cssnano()))
     .pipe(gulp.dest('./'))
     .pipe(browserSync.stream());
 });
@@ -99,7 +101,8 @@ gulp.task('watch', function () {
   gulp.watch('src/img/*', ['images']);
 
   // Watch fonts
-    gulp.watch('src/fonts/*.{ttf,otf}"', ['font']);
+  gulp.watch('src/fonts/*.{ttf,otf}"', ['font']);
+
 });
 
 // Analyze CSS

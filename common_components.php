@@ -38,3 +38,6 @@
 <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
   <?php the_content(); ?>
 <?php endwhile; endif;?>
+
+<?php // Get slug ?>
+<?php echo get_post_field( 'post_name', get_post() ); ?>

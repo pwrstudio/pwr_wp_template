@@ -9,7 +9,6 @@
   // var shared = require('./shared')
 
   // require('swiper')
-  // require('fullpage.js')
 
   // Modernizr tests
   // require('browsernizr/test/webgl')

@@ -4,18 +4,18 @@
  * Enqueue scripts and styles.
  */
 function pwrstudio_template_scripts() {
-  
+
     // Enque font style file
     //    wp_enqueue_style( 'univers_light', get_template_directory_uri() . '/fonts/UniversLTCYR-45Light.css');
     wp_enqueue_style( 'pwrstudio_template-style', get_template_directory_uri() . '/style.css');
-        
+
     if (!is_admin()) {
-      
+
         wp_deregister_script('jquery');
-      
+
         wp_register_script( 'pwr_scripts', get_template_directory_uri() . '/app.min.js', false, '1', true);
         wp_enqueue_script('pwr_scripts');
-                        
+
     }
 
 }
@@ -138,9 +138,9 @@ function add_category_to_single($classes, $class) {
 function add_slug_body_class( $classes ) {
 global $post;
 if ( isset( $post ) ) {
-$classes[] = $post->post_type . '-' . $post->post_name;
+  $classes[] = $post->post_type . '-' . $post->post_name;
 }
-return $classes;
+  return $classes;
 }
 add_filter( 'body_class', 'add_slug_body_class' );
 
@@ -168,3 +168,17 @@ function my_custom_columns($column)
 }
 add_action("manage_posts_custom_column", "my_custom_columns");
 add_filter("manage_edit-post_columns", "my_page_columns");
+
+// Strip tags from ACF-content
+// function so_26068464( $content )
+// {
+//   return strip_tags( $content, '<img><p><strong><i><em><a>' );
+// }
+// add_filter( 'acf_the_content', 'so_26068464' );
+
+function filter_ptags_on_images($content)
+{
+  return preg_replace('/<p>(\s*)(<img .* \/>)(\s*)<\/p>/iU', '\2', $content);
+}
+
+add_filter('acf_the_content', 'filter_ptags_on_images');
